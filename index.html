@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.4/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css"> <!-- Your custom stylesheet -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <title>English Essay Assistant</title>
+      </head>
+      <body class="bg-gray-100 p-6">
+        <!-- Header Section -->
+        <header class="text-center p-4 bg-green-600 text-white">
+          <h1>English Essay Assistant</h1>
+        </header>
+    
+        <!-- Input Section -->
+        <section class="bg-white p-6 rounded shadow mt-6">
+          <h2 class="text-xl mb-4">Enter Your Essay</h2>
+          <label for="question" class="block text-gray-700">Question:</label>
+          <input type="text" id="question" placeholder="Enter the question or prompt for the essay" class="p-2 w-full mb-4 border rounded"/>
+          <label for="essay" class="block text-gray-700">Essay:</label>
+          <textarea id="essay" placeholder="Paste your essay here" class="p-2 w-full h-60 mb-4 border rounded"></textarea>
+          <div class="flex items-center"> <!-- Flex container for alignment -->
+            <button id="submit-essay" onclick="handleEssaySubmit()" class="bg-blue-500 text-white p-2 rounded">Submit Essay for Analysis</button>
+            <div id="loading-container" class="inline-block ml-4"> <!-- Margin-left added -->
+              <div id="loading" class="loader hidden"></div>
+            </div>
+          </div>              
+        </section>
+        
+
+    <!-- Essay and Suggestions Display -->
+    <!-- Essay and Suggestions Display -->
+    <div class="flex flex-col md:flex-row mt-6"> <!-- Update to flex-col on small screens, flex-row on medium screens -->
+      <!-- Essay Display Section -->
+      <section class="essay-display w-full md:w-1/2 p-6 bg-white rounded shadow mb-6 md:mb-0"> <!-- Update width to full on small screens, 1/2 on medium screens, and add bottom margin on small screens -->
+        <h2 class="text-xl mb-4">Original Essay</h2>
+        <p class="text-sm text-gray-600 mb-2">Hover over a paragraph to see suggestions for improvement in the right column.</p>
+        <div id="essay-display" class="h-96 overflow-y-auto border p-2 rounded"></div>
+      </section>
+
+      <!-- Suggestions Display Section -->
+      <section class="suggestions-display w-full md:w-1/2 p-6 bg-white rounded shadow ml-0 md:ml-6"> <!-- Update width to full on small screens, 1/2 on medium screens, and remove left margin on small screens -->
+        <h2 class="text-xl mb-4">Suggestions for Improvement</h2>
+        <p class="text-sm text-gray-600 mb-2">Improvements for the hovered paragraph will appear here.</p>
+        <div id="suggestions-container" class="h-96 overflow-y-auto border p-2 rounded">
+          <!-- Suggestions will be populated here -->
+        </div>
+      </section>
+    </div>
+
+  
+      <script src="script.js"></script>
+    </body>
+</html>

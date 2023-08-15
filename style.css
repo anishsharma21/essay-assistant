@@ -1,0 +1,110 @@
+body {
+    font-family: 'Roboto', sans-serif; /* Use the Roboto font */
+    background-color: #f5f5f5; /* Soft background color */
+  }
+  
+  h1 {
+    font-size: 2.5rem; /* Increase the size of the main title */
+    font-weight: bold; /* Make the title bold */
+  }
+  
+  h2 {
+    font-size: 1.5rem; /* Increase the size of the section titles */
+    font-weight: 600; /* Semi-bold weight for section titles */
+  }
+  
+  label,
+  input,
+  textarea {
+    font-size: 1rem; /* Standard font size for form elements */
+    line-height: 1.5; /* Improve line spacing */
+  }
+  
+  #essay-display p,
+  #suggestions-container p {
+    font-size: 1rem; /* Standard font size for paragraphs */
+    line-height: 1.5; /* Improve line spacing */
+    margin-bottom: 1em; /* Add space between paragraphs */
+  }
+  
+  .highlighted-sentence {
+    background-color: #ffff99;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  #essay-display .highlighted-paragraph {
+    background-color: #0baaf5 !important;
+  }
+  
+  .suggestions-container {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .suggestion {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    cursor: pointer;
+  }
+  
+  .suggestion:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .paragraphs-container {
+    white-space: pre-line;
+  }
+  
+  #essay-display p {
+    transition: background-color 0.3s;
+  }
+  
+  #essay-display p:hover {
+    background-color: #f0f0f0;
+  }
+  
+  #loading-container {
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  
+  .loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #4caf50; /* Match loader color with the theme */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Additional enhancements */
+  button {
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: #3f8e40;
+  }
+  
+  input, textarea {
+    border: 1px solid #ccc;
+    transition: 0.3s;
+  }
+  
+  input:focus, textarea:focus {
+    border-color: #4caf50;
+  }
+  
+  /* Responsive layout handled by Tailwind */
+  
