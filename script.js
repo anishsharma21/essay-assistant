@@ -17,7 +17,7 @@ async function handleEssaySubmit() {
     // progressContainer.style.display = 'block';
   
     try {
-        const response = await fetch('http://localhost:3000/analyze-essay', {
+        const response = await fetch('/api/essay', { ///http://localhost:3000/analyze-essay
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
