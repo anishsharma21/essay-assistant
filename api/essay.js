@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Parse JSON body
-    const body = JSON.parse(req.body);
+    const body = req.body;
     const { essay, question } = body;
 
     // Placeholder function to make the API call to determine the paragraph type
