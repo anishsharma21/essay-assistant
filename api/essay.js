@@ -17,79 +17,85 @@ function getNextApiKey() {
 }
 
 module.exports = async (req, res) => {
-    // Allow CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    try {
+        console.log("Request body received:", req.body);
+        // Allow CORS
+        res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Parse JSON body
-    const body = req.body;
-    const { essay, question } = body;
+        // Parse JSON body
+        const body = req.body;
+        const { essay, question } = body;
 
-    // Placeholder function to make the API call to determine the paragraph type
+        // Placeholder function to make the API call to determine the paragraph type
 
-// Get the next API key for this request
-const OPENAI_API_KEY = getNextApiKey();
+        // Get the next API key for this request
+        const OPENAI_API_KEY = getNextApiKey();
 
-// Create a configuration for this request
-const configuration = new Configuration({
-  apiKey: OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+        // Create a configuration for this request
+        const configuration = new Configuration({
+        apiKey: OPENAI_API_KEY,
+        });
+        const openai = new OpenAIApi(configuration);
 
-async function determineParagraphType(paragraph, entireEssay) {
-  
-    // Prepare the messages for the API call
-    const messages = [
-        {
-            "role": "system",
-            "content": "You are to identify whether a paragraph is an Introduction, Body Paragraph, or Conclusion from an essay. "
-          },
-          {
-            "role": "user",
-            "content": `Here is an essay:\n\n${entireEssay}\n\nIs the following paragraph the Introduction, Body Paragraph, or Conclusion (respond with either \"Introduction\", \"Body Paragraph\", or \"Conclusion\")?\n\n${paragraph}`
-          }
-    ];
+        async function determineParagraphType(paragraph, entireEssay) {
+        
+            // Prepare the messages for the API call
+            const messages = [
+                {
+                    "role": "system",
+                    "content": "You are to identify whether a paragraph is an Introduction, Body Paragraph, or Conclusion from an essay. "
+                },
+                {
+                    "role": "user",
+                    "content": `Here is an essay:\n\n${entireEssay}\n\nIs the following paragraph the Introduction, Body Paragraph, or Conclusion (respond with either \"Introduction\", \"Body Paragraph\", or \"Conclusion\")?\n\n${paragraph}`
+                }
+            ];
 
-    console.log(messages);
-  
-    // Make the API call
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: messages,
-      temperature: 0,
-      max_tokens: 50,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
-    console.log(response.data.choices[0]);
-  
-    // Return the result from the API response
-    return response.data.choices[0].message.content.trim();
+            console.log(messages);
+        
+            // Make the API call
+            const response = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: messages,
+            temperature: 0,
+            max_tokens: 50,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            });
+            console.log(response.data.choices[0]);
+        
+            // Return the result from the API response
+            return response.data.choices[0].message.content.trim();
 
-  }
-    // Splitting the essay into paragraphs
-    const paragraphs = essay.split('\n\n');
+        }
+        // Splitting the essay into paragraphs
+        const paragraphs = essay.split('\n\n');
 
-    // Looping through each paragraph and determining its type
-    const paragraphTypes = [];
-    for (const paragraph of paragraphs) {
-    const paragraphType = await determineParagraphType(paragraph, essay);
-    paragraphTypes.push(paragraphType);
+        // Looping through each paragraph and determining its type
+        const paragraphTypes = [];
+        for (const paragraph of paragraphs) {
+        const paragraphType = await determineParagraphType(paragraph, essay);
+        paragraphTypes.push(paragraphType);
+        }
+        console.log(paragraphTypes);
+
+        // Rewrite the paragraphs and assemble the rewritten essay
+        const rewrittenParagraphs = [];
+        for (let i = 0; i < paragraphs.length; i++) {
+        const paragraph = paragraphs[i];
+        const paragraphType = paragraphTypes[i];
+        const rewrittenParagraph = await rewriteParagraph(paragraph, paragraphType, question);
+        rewrittenParagraphs.push("\n\n", rewrittenParagraph + "");
+        }
+        const rewrittenEssay = rewrittenParagraphs.join('\n');
+
+        // Send the result back to the client-side
+        res.json({ rewrittenParagraphs });
+    } catch (error) {
+        console.error("An error occurred in the server function:", error);
+        res.status(500).json({ error: "An internal error occurred" });
     }
-    console.log(paragraphTypes);
-
-    // Rewrite the paragraphs and assemble the rewritten essay
-    const rewrittenParagraphs = [];
-    for (let i = 0; i < paragraphs.length; i++) {
-    const paragraph = paragraphs[i];
-    const paragraphType = paragraphTypes[i];
-    const rewrittenParagraph = await rewriteParagraph(paragraph, paragraphType, question);
-    rewrittenParagraphs.push("\n\n", rewrittenParagraph + "");
-    }
-    const rewrittenEssay = rewrittenParagraphs.join('\n');
-
-    // Send the result back to the client-side
-    res.json({ rewrittenParagraphs });
 };
 
 async function rewriteParagraph(paragraph, paragraphType, question) {
@@ -237,3 +243,84 @@ async function rewriteParagraph(paragraph, paragraphType, question) {
   
   }
   
+
+  /* async function rewriteParagraph(paragraph, paragraphType, question) {
+
+    // Get the next API key for this request
+    const OPENAI_API_KEY = getNextApiKey();
+
+    // Create a configuration for this request
+    const configuration = new Configuration({
+    apiKey: OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+
+    console.log("Paragraph Type:", paragraphType);
+    console.log("Question:", question);
+    console.log("Paragraph:", paragraph);
+
+    if (paragraphType == "Introduction") {
+      // Prepare the messages for the API call
+      const messages = [REMOVED CAUSE TOO LONG
+      ];
+  
+      // Make the API call
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: messages,
+        temperature: 0.25,
+        max_tokens: 400,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      console.log(response);
+  
+      // Return the result from the API response
+      return response.data.choices[0].message.content.trim();
+
+    }
+    else if (paragraphType == "Body Paragraph") {
+        const messages = [REMOVED CAUSE TOO LONG
+          ]
+
+          const response = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: messages,
+            temperature: 0.25,
+            max_tokens: 600,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          console.log(response);
+        
+          // Return the result from the API response
+          return response.data.choices[0].message.content.trim();
+
+    }
+    else if (paragraphType == "Conclusion") {
+        const messages = [REMOVED CAUSE TOO LONG
+          ];
+        
+          // Make the API call
+          const response = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: messages,
+            temperature: 0.5,
+            max_tokens: 200, // Conclusions are shorter, so we can reduce the max_tokens
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          console.log(response);
+        
+          // Return the result from the API response
+          return response.data.choices[0].message.content.trim();
+
+    }
+    else {
+        console.log("Error: couldn't determine paragraph type.");
+    }
+  
+  } */
