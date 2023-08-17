@@ -67,7 +67,8 @@ async function determineParagraphType(paragraph, entireEssay) {
     return response.data.choices[0].message.content.trim();
 
   }
-  
+    // Splitting the essay into paragraphs
+    const paragraphs = essay.split('\n\n');
 
     // Looping through each paragraph and determining its type
     const paragraphTypes = [];
