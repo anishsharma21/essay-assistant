@@ -152,10 +152,10 @@ async function rewriteParagraph(paragraph, paragraphType, question) {
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-      console.log(response);
-  
-      // Return the result from the API response
-      return response.data.choices[0].message.content.trim();
+      console.log("Response from OpenAI API:", response);
+        const rewrittenContent = response.data.choices[0].message.content.trim();
+        console.log("Rewritten Content:", rewrittenContent);
+        return rewrittenContent;
 
     }
     else if (paragraphType == "Body Paragraph") {
@@ -195,10 +195,10 @@ async function rewriteParagraph(paragraph, paragraphType, question) {
             frequency_penalty: 0,
             presence_penalty: 0,
           });
-          console.log(response);
-        
-          // Return the result from the API response
-          return response.data.choices[0].message.content.trim();
+          console.log("Response from OpenAI API:", response);
+        const rewrittenContent = response.data.choices[0].message.content.trim();
+        console.log("Rewritten Content:", rewrittenContent);
+        return rewrittenContent;
 
     }
     else if (paragraphType == "Conclusion") {
@@ -231,10 +231,10 @@ async function rewriteParagraph(paragraph, paragraphType, question) {
             frequency_penalty: 0,
             presence_penalty: 0,
           });
-          console.log(response);
-        
-          // Return the result from the API response
-          return response.data.choices[0].message.content.trim();
+          console.log("Response from OpenAI API:", response);
+        const rewrittenContent = response.data.choices[0].message.content.trim();
+        console.log("Rewritten Content:", rewrittenContent);
+        return rewrittenContent;
 
     }
     else {
